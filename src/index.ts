@@ -33,6 +33,10 @@ export interface Options {
    */
   enableConstEnums: boolean
   /**
+   * Generate a const literal object for enums, as well as an inferred enum type
+   */
+  enableEnumTypes: boolean
+  /**
    * Format code? Set this to `false` to improve performance.
    */
   format: boolean
@@ -75,6 +79,7 @@ export const DEFAULT_OPTIONS: Options = {
   cwd: process.cwd(),
   declareExternallyReferenced: true,
   enableConstEnums: true,
+  enableEnumTypes: false,
   format: true,
   ignoreMinAndMaxItems: false,
   strictIndexSignatures: false,

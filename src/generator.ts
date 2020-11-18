@@ -325,6 +325,8 @@ function generateComment(comment: string): string {
 }
 
 function generateStandaloneEnum(ast: TEnum, options: Options): string {
+  if (options.enableEnumTypes) return generateStandaloneEnumAndType(ast, options)
+
   return (
     (hasComment(ast) ? generateComment(ast.comment) + '\n' : '') +
     'export ' +
@@ -334,6 +336,18 @@ function generateStandaloneEnum(ast: TEnum, options: Options): string {
     ast.params.map(({ast, keyName}) => keyName + ' = ' + generateType(ast, options)).join(',\n') +
     '\n' +
     '}'
+  )
+}
+
+function generateStandaloneEnumAndType(ast: TEnum, options: Options): string {
+  return (
+    (hasComment(ast) ? generateComment(ast.comment) + '\n' : '') +
+    `export const ${toSafeString(ast.standaloneName)} = {
+    ${ast.params.map(({ast, keyName}) => keyName + ' = ' + generateType(ast, options)).join(',\n')}
+} as const;
+export type ${toSafeString(ast.standaloneName)} = typeof ${toSafeString(
+      ast.standaloneName
+    )}[keyof typeof ${toSafeString(ast.standaloneName)}];`
   )
 }
 
