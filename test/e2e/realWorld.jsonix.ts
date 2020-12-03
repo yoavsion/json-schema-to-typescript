@@ -1,3 +1,6 @@
+// Excluding this test since jsonix.org seems to be down (https://github.com/highsource/jsonix/issues/248)
+export const exclude = true
+
 export const options = {
   format: false
 }
